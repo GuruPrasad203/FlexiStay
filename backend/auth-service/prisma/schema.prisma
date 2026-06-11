@@ -1,0 +1,67 @@
+// Prisma schema — this file defines your database tables.
+// Each "model" = one table. Each field = one column.
+//
+// After editing this file, run:
+//   npx prisma migrate dev --name <description>
+// That creates the actual table in PostgreSQL.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// In Prisma 7, the database URL moved out of schema.prisma.
+// Connection config lives in prisma.config.ts (migrations)
+// and is passed via adapter to PrismaClient (runtime).
+datasource db {
+  provider = "postgresql"
+}
+
+// ── User ──────────────────────────────────────────────────────
+// Stores guest and hotel-partner accounts.
+// OTP check-in/out codes are NOT stored here — they live in Redis
+// with a short TTL so they auto-expire.
+
+model User {
+  id           String   @id @default(cuid())   // "cuid" = short collision-resistant ID
+  email        String   @unique
+  phone        String?  @unique                // optional — used for OTP SMS
+  passwordHash String
+  name         String
+  role         UserRole @default(GUEST)
+
+  // Timestamps — Prisma sets these automatically
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Refresh tokens — one user can have multiple active sessions
+  // (logged in on phone + laptop simultaneously)
+  refreshTokens RefreshToken[]
+
+  @@map("users") // actual table name in PostgreSQL
+}
+
+// ── RefreshToken ──────────────────────────────────────────────
+// We store refresh tokens so we can invalidate them on logout.
+// Without this table, a user who logs out could still use their
+// old refresh token until it expires (7 days later).
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@map("refresh_tokens")
+}
+
+// ── Enum ──────────────────────────────────────────────────────
+// TypeScript note: "enum" is a fixed set of string constants.
+// UserRole.GUEST, UserRole.HOTEL_PARTNER, UserRole.ADMIN are the only valid values.
+
+enum UserRole {
+  GUEST
+  HOTEL_PARTNER
+  ADMIN
+}

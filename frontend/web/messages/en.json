@@ -1,0 +1,148 @@
+{
+  "Metadata": {
+    "title": "FlexiStay — Book Hotel Rooms by the Hour",
+    "description": "Book hotel rooms for 3–6 hours. Instant confirmation. Zero no-shows. Chennai's smartest hourly hotel booking platform."
+  },
+
+  "Home": {
+    "tagline": "The smartest way to fill your rooms — by the hour.",
+    "searchCta": "Find a Room",
+    "partnerCta": "List Your Hotel",
+    "stat": {
+      "commission": "Platform commission",
+      "noShows": "No-show risk",
+      "perBooking": "You earn per booking"
+    }
+  },
+
+  "Search": {
+    "title": "Find hourly hotel rooms",
+    "placeholder": "Search by area, hotel name…",
+    "filters": {
+      "duration": "Duration",
+      "checkIn": "Check-in time",
+      "priceRange": "Price range",
+      "amenities": "Amenities"
+    },
+    "duration": {
+      "1hr": "1 hour",
+      "2hr": "2 hours",
+      "3hr": "3 hours",
+      "6hr": "6 hours",
+      "12hr": "12 hours"
+    },
+    "noResults": "No rooms available for the selected time. Try a different time or area.",
+    "resultsCount": "{count} rooms available"
+  },
+
+  "Hotel": {
+    "perHour": "/ hour",
+    "bookNow": "Book Now",
+    "viewDetails": "View Details",
+    "amenities": "Amenities",
+    "policies": "Policies",
+    "reviews": "Reviews",
+    "availability": "Availability",
+    "tier": {
+      "standard": "Standard",
+      "comfort": "Comfort",
+      "premium": "Premium"
+    }
+  },
+
+  "Booking": {
+    "title": "Complete your booking",
+    "guestDetails": "Guest details",
+    "fullName": "Full name",
+    "phone": "Phone number",
+    "email": "Email address",
+    "idVerification": "Government-issued photo ID required at check-in",
+    "duration": "Duration",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "paymentMethod": "Payment method",
+    "payNow": {
+      "label": "Pay Now",
+      "description": "Pay the full amount online. Instant confirmation."
+    },
+    "reserveNow": {
+      "label": "Reserve Now",
+      "description": "Pay 30% now. Pay the rest at the hotel during check-in."
+    },
+    "priceBreakdown": {
+      "roomCharge": "Room charge",
+      "platformFee": "Platform fee",
+      "taxes": "Taxes & charges",
+      "total": "Total"
+    },
+    "confirmBooking": "Confirm Booking",
+    "processing": "Processing…"
+  },
+
+  "OTP": {
+    "title": "Your check-in OTP",
+    "instruction": "Show this OTP to the hotel staff at check-in.",
+    "validUntil": "Valid until {time}",
+    "validWindow": "Valid ±1 hour from your check-in time",
+    "checkInOtp": "Check-in OTP",
+    "checkOutOtp": "Check-out OTP",
+    "expired": "OTP expired",
+    "requestNew": "Request new OTP",
+    "doNotShare": "Never share this OTP with anyone other than hotel staff."
+  },
+
+  "Cancellation": {
+    "title": "Cancel booking",
+    "policy": "Cancellation policy",
+    "free": {
+      "label": "Free cancellation",
+      "description": "Cancel more than 24 hours before check-in for a full refund."
+    },
+    "partial": {
+      "label": "50% refund",
+      "description": "Cancelled between 2–24 hours before check-in. 50% of the booking amount will be refunded."
+    },
+    "noRefund": {
+      "label": "No refund",
+      "description": "Cancelled less than 2 hours before check-in or marked as no-show. No refund will be issued."
+    },
+    "currentFee": "Cancellation fee: {fee}",
+    "confirmCancel": "Yes, cancel my booking",
+    "keepBooking": "Keep my booking",
+    "refundInfo": "Refund will be credited within 5–7 business days."
+  },
+
+  "Overstay": {
+    "title": "You are past your checkout time",
+    "chargeInfo": "You are being charged {rate}/hour for overstay.",
+    "totalCharge": "Total overstay charge so far: {amount}",
+    "capWarning": "After 6 hours of overstay, a full-day charge applies.",
+    "extendStay": "Extend my stay",
+    "checkOutNow": "Check out now"
+  },
+
+  "Errors": {
+    "generic": "Something went wrong. Please try again.",
+    "notFound": "Page not found.",
+    "unauthorized": "Please log in to continue.",
+    "bookingFailed": "Booking could not be completed. Please try again.",
+    "paymentFailed": "Payment failed. Please check your card details.",
+    "otpInvalid": "Invalid OTP. Please check and try again.",
+    "otpExpired": "Your OTP has expired. Please request a new one."
+  },
+
+  "Common": {
+    "back": "Back",
+    "next": "Next",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "close": "Close",
+    "loading": "Loading…",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "search": "Search",
+    "viewAll": "View all",
+    "currency": "₹"
+  }
+}

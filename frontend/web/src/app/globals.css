@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+
+    /* Light mode */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 221 83% 53%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+  }
+
+  .dark {
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 221 83% 53%;
+
+    --card: 222 47% 9%;
+    --card-foreground: 210 40% 98%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 6%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    @apply font-sans antialiased;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus ring for accessibility — WCAG 2.2 */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /* OTP countdown timer */
+  .otp-ring {
+    @apply w-20 h-20 rounded-full;
+  }
+
+  /* Booking status badges */
+  .badge-confirmed {
+    @apply bg-success/10 text-success border border-success/20 rounded-full px-3 py-1 text-xs font-medium;
+  }
+  .badge-pending {
+    @apply bg-warning/10 text-warning border border-warning/20 rounded-full px-3 py-1 text-xs font-medium;
+  }
+  .badge-cancelled {
+    @apply bg-destructive/10 text-destructive border border-destructive/20 rounded-full px-3 py-1 text-xs font-medium;
+  }
+}

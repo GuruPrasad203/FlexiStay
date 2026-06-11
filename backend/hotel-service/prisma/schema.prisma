@@ -1,0 +1,131 @@
+// Hotel service database schema.
+// This is a SEPARATE database from auth-service.
+// The two services only share userId (a string) — they don't join across DBs.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// In Prisma 7, the database URL moved out of schema.prisma.
+// Connection config lives in prisma.config.ts (migrations)
+// and is passed via adapter to PrismaClient (runtime).
+datasource db {
+  provider = "postgresql"
+}
+
+// ── Hotel ─────────────────────────────────────────────────────
+// A hotel registered on the FlexiStay platform.
+// ownerId comes from auth-service — it's the HOTEL_PARTNER's user ID.
+// We store it as a plain string (no foreign key to auth DB).
+
+model Hotel {
+  id          String      @id @default(cuid())
+  ownerId     String      // auth-service user ID of the hotel partner
+  name        String
+  description String?
+  address     String
+  city        String
+  state       String
+  pincode     String
+  latitude    Float?
+  longitude   Float?
+
+  // Tier affects search ranking and badge display
+  tier        HotelTier   @default(STANDARD)
+
+  // Amenities stored as a string array in PostgreSQL
+  amenities   String[]
+
+  // Is this hotel verified and visible in search?
+  isVerified  Boolean     @default(false)
+  isActive    Boolean     @default(true)
+
+  // Contact
+  phone       String
+  email       String
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  roomTypes   RoomType[]
+  images      HotelImage[]
+
+  @@map("hotels")
+}
+
+// ── RoomType ──────────────────────────────────────────────────
+// A hotel can have multiple room types (e.g. "Standard", "Deluxe", "Suite").
+// Each type has a per-hour price and a count of rooms available.
+//
+// IMPORTANT: pricePerHour is stored in PAISE (₹1 = 100 paise).
+// So ₹500/hr is stored as 50000. This avoids floating point errors.
+// (e.g. 0.1 + 0.2 = 0.30000000000000004 in floating point — bad for money)
+
+model RoomType {
+  id              String   @id @default(cuid())
+  hotelId         String
+  hotel           Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+
+  name            String   // e.g. "Standard", "Deluxe", "Suite"
+  description     String?
+  pricePerHour    Int      // in paise — ₹500/hr = 50000
+  totalRooms      Int      // how many physical rooms of this type
+  maxGuests       Int      @default(2)
+  amenities       String[] // room-specific amenities
+
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  bookingSlots    BookingSlot[]
+
+  @@map("room_types")
+}
+
+// ── BookingSlot ───────────────────────────────────────────────
+// Represents a confirmed booking occupying a room.
+// We create one record per booking to track availability.
+// bookingId comes from a future booking-service.
+
+model BookingSlot {
+  id          String    @id @default(cuid())
+  roomTypeId  String
+  roomType    RoomType  @relation(fields: [roomTypeId], references: [id], onDelete: Cascade)
+
+  bookingId   String    // booking-service booking ID
+  guestUserId String    // auth-service user ID of the guest
+  checkIn     DateTime
+  checkOut    DateTime
+  status      SlotStatus @default(CONFIRMED)
+
+  createdAt   DateTime  @default(now())
+
+  @@map("booking_slots")
+}
+
+// ── HotelImage ────────────────────────────────────────────────
+model HotelImage {
+  id        String   @id @default(cuid())
+  hotelId   String
+  hotel     Hotel    @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String?
+  isPrimary Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("hotel_images")
+}
+
+// ── Enums ─────────────────────────────────────────────────────
+enum HotelTier {
+  BUDGET
+  STANDARD
+  PREMIUM
+  LUXURY
+}
+
+enum SlotStatus {
+  CONFIRMED
+  CANCELLED
+  OVERSTAY  // guest stayed past checkout time
+}
