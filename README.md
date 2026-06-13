@@ -1,6 +1,6 @@
 # FlexiStay — Hourly Hotel Booking Platform
 
-## Folder Structure (Guru / Person 4)
+## Folder Structure 
 
 ```
 FlexiStay/
